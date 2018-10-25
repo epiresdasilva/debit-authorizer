@@ -1,0 +1,338 @@
+{
+    "composition": {
+        "type": "let",
+        "declarations": {
+            "params": null
+        },
+        "components": [
+            {
+                "type": "finally",
+                "body": {
+                    "type": "function",
+                    "function": {
+                        "exec": {
+                            "kind": "nodejs:default",
+                            "code": "args => { params = args }"
+                        }
+                    }
+                },
+                "finalizer": {
+                    "type": "if_nosave",
+                    "test": {
+                        "type": "mask",
+                        "components": [
+                            {
+                                "type": "sequence",
+                                "components": [
+                                    {
+                                        "type": "action",
+                                        "name": "/_/credit-card-online-debit-dev-findCreditCard",
+                                        "path": ".test[0]"
+                                    },
+                                    {
+                                        "type": "function",
+                                        "function": {
+                                            "exec": {
+                                                "kind": "nodejs:default",
+                                                "code": "params => { params.value = params.status === 'ACTIVE' }"
+                                            }
+                                        },
+                                        "path": ".test[1]"
+                                    }
+                                ],
+                                "path": ".test"
+                            }
+                        ]
+                    },
+                    "consequent": {
+                        "type": "finally",
+                        "body": {
+                            "type": "function",
+                            "function": {
+                                "exec": {
+                                    "kind": "nodejs:default",
+                                    "code": "() => params"
+                                }
+                            }
+                        },
+                        "finalizer": {
+                            "type": "mask",
+                            "components": [
+                                {
+                                    "type": "let",
+                                    "declarations": {
+                                        "params": null
+                                    },
+                                    "components": [
+                                        {
+                                            "type": "finally",
+                                            "body": {
+                                                "type": "function",
+                                                "function": {
+                                                    "exec": {
+                                                        "kind": "nodejs:default",
+                                                        "code": "args => { params = args }"
+                                                    }
+                                                }
+                                            },
+                                            "finalizer": {
+                                                "type": "if_nosave",
+                                                "test": {
+                                                    "type": "mask",
+                                                    "components": [
+                                                        {
+                                                            "type": "sequence",
+                                                            "components": [
+                                                                {
+                                                                    "type": "sequence",
+                                                                    "components": [
+                                                                        {
+                                                                            "type": "let",
+                                                                            "declarations": {
+                                                                                "params": null
+                                                                            },
+                                                                            "components": [
+                                                                                {
+                                                                                    "type": "finally",
+                                                                                    "body": {
+                                                                                        "type": "function",
+                                                                                        "function": {
+                                                                                            "exec": {
+                                                                                                "kind": "nodejs:default",
+                                                                                                "code": "args => { params = args }"
+                                                                                            }
+                                                                                        }
+                                                                                    },
+                                                                                    "finalizer": {
+                                                                                        "type": "sequence",
+                                                                                        "components": [
+                                                                                            {
+                                                                                                "type": "mask",
+                                                                                                "components": [
+                                                                                                    {
+                                                                                                        "type": "function",
+                                                                                                        "function": {
+                                                                                                            "exec": {
+                                                                                                                "kind": "nodejs:default",
+                                                                                                                "code": "params => { params.debitValue}"
+                                                                                                            }
+                                                                                                        },
+                                                                                                        "path": ".consequent.test[0][0]"
+                                                                                                    },
+                                                                                                    {
+                                                                                                        "type": "action",
+                                                                                                        "name": "/_/credit-card-online-debit-dev-findBalance",
+                                                                                                        "path": ".consequent.test[0][1]"
+                                                                                                    }
+                                                                                                ]
+                                                                                            },
+                                                                                            {
+                                                                                                "type": "function",
+                                                                                                "function": {
+                                                                                                    "exec": {
+                                                                                                        "kind": "nodejs:default",
+                                                                                                        "code": "result => ({ params, result })"
+                                                                                                    }
+                                                                                                }
+                                                                                            }
+                                                                                        ]
+                                                                                    }
+                                                                                }
+                                                                            ]
+                                                                        },
+                                                                        {
+                                                                            "type": "function",
+                                                                            "function": {
+                                                                                "exec": {
+                                                                                    "kind": "nodejs:default",
+                                                                                    "code": "({ params, result }) => Object.assign(params, result)"
+                                                                                }
+                                                                            }
+                                                                        }
+                                                                    ],
+                                                                    "path": ".consequent.test[0]"
+                                                                },
+                                                                {
+                                                                    "type": "function",
+                                                                    "function": {
+                                                                        "exec": {
+                                                                            "kind": "nodejs:default",
+                                                                            "code": "params => { params.value = params.balance - params.debitValue >= 0 }"
+                                                                        }
+                                                                    },
+                                                                    "path": ".consequent.test[1]"
+                                                                }
+                                                            ],
+                                                            "path": ".consequent.test"
+                                                        }
+                                                    ]
+                                                },
+                                                "consequent": {
+                                                    "type": "finally",
+                                                    "body": {
+                                                        "type": "function",
+                                                        "function": {
+                                                            "exec": {
+                                                                "kind": "nodejs:default",
+                                                                "code": "() => params"
+                                                            }
+                                                        }
+                                                    },
+                                                    "finalizer": {
+                                                        "type": "mask",
+                                                        "components": [
+                                                            {
+                                                                "type": "action",
+                                                                "name": "/_/credit-card-online-debit-dev-provisionalDebit",
+                                                                "path": ".consequent.consequent"
+                                                            }
+                                                        ]
+                                                    }
+                                                },
+                                                "alternate": {
+                                                    "type": "finally",
+                                                    "body": {
+                                                        "type": "function",
+                                                        "function": {
+                                                            "exec": {
+                                                                "kind": "nodejs:default",
+                                                                "code": "() => params"
+                                                            }
+                                                        }
+                                                    },
+                                                    "finalizer": {
+                                                        "type": "mask",
+                                                        "components": [
+                                                            {
+                                                                "type": "function",
+                                                                "function": {
+                                                                    "exec": {
+                                                                        "kind": "nodejs:default",
+                                                                        "code": "params => { params.message = 'failure'}"
+                                                                    }
+                                                                },
+                                                                "path": ".consequent.alternate"
+                                                            }
+                                                        ]
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    ],
+                                    "path": ".consequent"
+                                }
+                            ]
+                        }
+                    },
+                    "alternate": {
+                        "type": "finally",
+                        "body": {
+                            "type": "function",
+                            "function": {
+                                "exec": {
+                                    "kind": "nodejs:default",
+                                    "code": "() => params"
+                                }
+                            }
+                        },
+                        "finalizer": {
+                            "type": "mask",
+                            "components": [
+                                {
+                                    "type": "function",
+                                    "function": {
+                                        "exec": {
+                                            "kind": "nodejs:default",
+                                            "code": "params => { params.message = 'failure' }"
+                                        }
+                                    },
+                                    "path": ".alternate"
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        ],
+        "path": ""
+    },
+    "ast": {
+        "type": "if",
+        "test": {
+            "type": "sequence",
+            "components": [
+                {
+                    "type": "action",
+                    "name": "/_/credit-card-online-debit-dev-findCreditCard"
+                },
+                {
+                    "type": "function",
+                    "function": {
+                        "exec": {
+                            "kind": "nodejs:default",
+                            "code": "params => { params.value = params.status === 'ACTIVE' }"
+                        }
+                    }
+                }
+            ]
+        },
+        "consequent": {
+            "type": "if",
+            "test": {
+                "type": "sequence",
+                "components": [
+                    {
+                        "type": "merge",
+                        "components": [
+                            {
+                                "type": "function",
+                                "function": {
+                                    "exec": {
+                                        "kind": "nodejs:default",
+                                        "code": "params => { params.debitValue}"
+                                    }
+                                }
+                            },
+                            {
+                                "type": "action",
+                                "name": "/_/credit-card-online-debit-dev-findBalance"
+                            }
+                        ]
+                    },
+                    {
+                        "type": "function",
+                        "function": {
+                            "exec": {
+                                "kind": "nodejs:default",
+                                "code": "params => { params.value = params.balance - params.debitValue >= 0 }"
+                            }
+                        }
+                    }
+                ]
+            },
+            "consequent": {
+                "type": "action",
+                "name": "/_/credit-card-online-debit-dev-provisionalDebit"
+            },
+            "alternate": {
+                "type": "function",
+                "function": {
+                    "exec": {
+                        "kind": "nodejs:default",
+                        "code": "params => { params.message = 'failure'}"
+                    }
+                }
+            }
+        },
+        "alternate": {
+            "type": "function",
+            "function": {
+                "exec": {
+                    "kind": "nodejs:default",
+                    "code": "params => { params.message = 'failure' }"
+                }
+            }
+        }
+    },
+    "version": "0.8.1"
+}
