@@ -1,14 +1,13 @@
 # Debit authorizer
 
-This project is about an example of a debit authorizer with credit card using functions over the IBM Cloud Functions.
+This project is about an example of a debit authorizer with the credit card using functions over the IBM Cloud Functions.
 
 ## Why?
 
-Create a high available, auto scalable and performatic solution to authorize debit operations for finantial institutions.
-
+Create a highly available, auto scalable and highly performant solution to authorize debit operations for financial institutions.
 ## How it works
 
-Above is the diagram that shows how the system will work.
+Below is the diagram that shows how the system will work.
 
 ![](diagrams/diagram.svg)
 
