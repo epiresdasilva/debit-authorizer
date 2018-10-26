@@ -1,8 +1,25 @@
-# Serverless OpenWhisk Python Template
+# Debit authorizer
 
-Hello! 😎
+This project is about an example of a debit authorizer with credit card using functions over the IBM Cloud Functions.
 
-This is a template Python service for the OpenWhisk platform. Before you can deploy your service, please follow the instructions below…
+## Why?
+
+Create a high available, auto scalable and performatic solution to authorize debit operations for finantial institutions.
+
+## How it works
+
+Above is the diagram that shows how the system will work.
+
+![](diagrams/diagram.svg)
+
+## How it was developed
+
+* Functions
+* Serverless framework
+* IBM Functions Composer
+* Python
+* NodeJS
+* PostgreSQL
 
 ### Have you set up your account credentials?
 
@@ -24,8 +41,8 @@ Account credentials for OpenWhisk can be provided through a configuration file o
 
 Install project dependencies which includes the OpenWhisk provider plugin.
 
-```
-$ npm install
+```shell
+npm install
 ```
 
 **_…and that's it!_**
@@ -36,12 +53,5 @@ Use the `serverless` command to deploy your service. The sample `handler.js` fil
 
 ```shell
 serverless deploy
+deploy credit-card-online-debit-dev-authorizer authorizer.json -w
 ```
-
-
-
-### Issues / Feedback / Feature Requests?
-
-If you have any issues, comments or want to see new features, please file an issue in the project repository:
-
-https://github.com/serverless/serverless-openwhisk
