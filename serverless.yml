@@ -1,7 +1,9 @@
 service: credit-card-online-debit
 provider:
   name: openwhisk
-  runtime: python
+  runtime: python3
+  memory: 256
+  timeout: 30
 functions:
   findBalance:
     handler: find_balance.main
@@ -11,3 +13,8 @@ functions:
     handler: provisional_debit.main
 plugins:
   - serverless-openwhisk
+  - serverless-python-requirements
+custom:
+  pythonRequirements:
+    dockerizePip: false
+#    dockerImage: lambci/lambda:build-python3.6

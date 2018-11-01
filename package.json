@@ -8,6 +8,7 @@
     "openwhisk"
   ],
   "devDependencies": {
-    "serverless-openwhisk": ">=0.13.0"
+    "serverless-openwhisk": ">=0.13.0",
+    "serverless-python-requirements": "^4.2.4"
   }
 }
