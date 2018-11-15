@@ -16,7 +16,7 @@ Below is the diagram that shows how the system will work.
 * Functions
 * Serverless framework
 * IBM Functions Composer
-* Python
+* Java
 * NodeJS
 * PostgreSQL
 
