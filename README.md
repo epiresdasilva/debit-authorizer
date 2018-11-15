@@ -51,6 +51,6 @@ npm install
 Use the `serverless` command to deploy your service. The sample `handler.js` file can be deployed without modification.
 
 ```shell
-serverless deploy
+mvn clean deploy
 deploy credit-card-online-debit-dev-authorizer authorizer.json -w
 ```

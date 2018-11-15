@@ -52,10 +52,7 @@
               <goal>exec</goal>
             </goals>
             <configuration>
-              <executable>sls</executable>
-              <arguments>
-                <argument>deploy</argument>
-              </arguments>
+              <executable>functions-deploy.sh</executable>
             </configuration>
           </execution>
         </executions>
