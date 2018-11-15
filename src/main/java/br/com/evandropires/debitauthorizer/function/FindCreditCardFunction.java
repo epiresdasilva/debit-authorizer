@@ -1,5 +1,8 @@
 package br.com.evandropires.debitauthorizer.function;
 
+import br.com.evandropires.debitauthorizer.dao.impl.CreditCardDAOImpl;
+import br.com.evandropires.debitauthorizer.service.CreditCardProvider;
+import br.com.evandropires.debitauthorizer.service.CreditCardService;
 import com.google.gson.JsonObject;
 
 /**
@@ -9,12 +12,9 @@ public class FindCreditCardFunction {
 	public static JsonObject main(JsonObject params) {
 		String cardNumber = params.get("cardNumber").getAsString();
 
-		JsonObject response = new JsonObject();
-		response.addProperty("agency", 123);
-		response.addProperty("account", 456);
-		response.addProperty("cardNumber", cardNumber);
-		response.addProperty("status", "ACTIVE");
-		return response;
+		CreditCardProvider creditCardProvider = new CreditCardProvider();
+		creditCardProvider.setCreditCardDAO(new CreditCardDAOImpl());
+		return new CreditCardService(creditCardProvider).findCreditCard(cardNumber);
 	}
 
 }
