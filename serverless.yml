@@ -1,20 +1,16 @@
-service: credit-card-online-debit
+service: debitauthorizer
 provider:
   name: openwhisk
-  runtime: python3
-  memory: 256
-  timeout: 30
+  runtime: java
+package:
+ artifact: target/debitauthorizer.jar
+
 functions:
   findBalance:
-    handler: find_balance.main
+    handler: target/debitauthorizer.jar:br.com.evandropires.debitauthorizer.function.FindBalanceFunction
   findCreditCard:
-    handler: find_credit_card.main
+    handler: target/debitauthorizer.jar:br.com.evandropires.debitauthorizer.function.FindCreditCardFunction
   provisionalDebit:
-    handler: provisional_debit.main
+    handler: target/debitauthorizer.jar:br.com.evandropires.debitauthorizer.function.ProvisionalDebitFunction
 plugins:
-  - serverless-openwhisk
-  - serverless-python-requirements
-custom:
-  pythonRequirements:
-    dockerizePip: false
-#    dockerImage: lambci/lambda:build-python3.6
+  - "serverless-openwhisk"
