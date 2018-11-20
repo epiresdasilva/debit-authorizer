@@ -3,14 +3,15 @@ provider:
   name: openwhisk
   runtime: java
 package:
- artifact: target/debitauthorizer.jar
-
+  artifact: target/debitauthorizer.jar
 functions:
   findBalance:
     handler: target/debitauthorizer.jar:br.com.evandropires.debitauthorizer.function.FindBalanceFunction
   findCreditCard:
     handler: target/debitauthorizer.jar:br.com.evandropires.debitauthorizer.function.FindCreditCardFunction
   provisionalDebit:
+    handler: target/debitauthorizer.jar:br.com.evandropires.debitauthorizer.function.ProvisionalDebitFunction
+  transactionAdd:
     handler: target/debitauthorizer.jar:br.com.evandropires.debitauthorizer.function.ProvisionalDebitFunction
 plugins:
   - "serverless-openwhisk"

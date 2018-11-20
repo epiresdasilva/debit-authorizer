@@ -9,7 +9,6 @@ import br.com.evandropires.debitauthorizer.dao.impl.ProvisionalDebitDAOImpl;
 public class ProvisionalDebitProvider {
 
 	private ProvisionalDebitDAO provisionalDebitDAO = new ProvisionalDebitDAOImpl();
-	private AccountService accountService = new AccountService(new AccountProvider());
 
 	public ProvisionalDebitDAO getProvisionalDebitDAO() {
 		return provisionalDebitDAO;
@@ -17,13 +16,5 @@ public class ProvisionalDebitProvider {
 
 	public void setProvisionalDebitDAO(ProvisionalDebitDAO provisionalDebitDAO) {
 		this.provisionalDebitDAO = provisionalDebitDAO;
-	}
-
-	public AccountService getAccountService() {
-		return accountService;
-	}
-
-	public void setAccountService(AccountService accountService) {
-		this.accountService = accountService;
 	}
 }

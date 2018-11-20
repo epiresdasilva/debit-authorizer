@@ -1,5 +1,6 @@
 package br.com.evandropires.debitauthorizer.service;
 
+import br.com.evandropires.debitauthorizer.model.DebitCard;
 import com.google.gson.JsonObject;
 
 /**
@@ -14,7 +15,16 @@ public class CreditCardService {
 	}
 
 	public JsonObject findCreditCard(Long cardNumber) {
-		return provider.getCreditCardDAO().findCreditCard(cardNumber);
+		DebitCard debitCard = provider.getCreditCardDAO().findCreditCard(cardNumber);
+		if (debitCard == null) {
+			return null;
+		}
+		JsonObject response = new JsonObject();
+		response.addProperty("agency", debitCard.getAgency());
+		response.addProperty("account", debitCard.getAccount());
+		response.addProperty("cardNumber", debitCard.getCardNumber());
+		response.addProperty("status", debitCard.getStatus());
+		return response;
 	}
 
 }

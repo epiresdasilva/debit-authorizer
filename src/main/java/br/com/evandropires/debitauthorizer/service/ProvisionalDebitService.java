@@ -14,6 +14,9 @@ public class ProvisionalDebitService {
 	}
 
 	public void addProvisionalDebit(Integer agency, Integer account, BigDecimal debitValue) {
+		if (debitValue == null || BigDecimal.ZERO.compareTo(debitValue) >= 0) {
+			throw new RuntimeException("Debit value must be greater than zero.");
+		}
 		provider.getProvisionalDebitDAO().addProvisionalDebit(agency, account, debitValue);
 	}
 

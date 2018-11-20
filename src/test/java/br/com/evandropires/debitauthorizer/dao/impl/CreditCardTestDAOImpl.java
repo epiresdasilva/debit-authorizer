@@ -1,7 +1,9 @@
 package br.com.evandropires.debitauthorizer.dao.impl;
 
 import br.com.evandropires.debitauthorizer.dao.CreditCardDAO;
-import com.google.gson.JsonObject;
+import br.com.evandropires.debitauthorizer.model.DebitCard;
+import br.com.evandropires.debitauthorizer.util.BaseTestUtil;
+import org.javalite.activejdbc.Base;
 
 /**
  * Created by evandro on 14/11/2018.
@@ -9,23 +11,23 @@ import com.google.gson.JsonObject;
 public class CreditCardTestDAOImpl implements CreditCardDAO {
 
 	@Override
-	public JsonObject findCreditCard(Long cardNumber) {
-		if (cardNumber == 888888L) {
-			JsonObject response = new JsonObject();
-			response.addProperty("agency", 888);
-			response.addProperty("account", 888);
-			response.addProperty("cardNumber", cardNumber);
-			response.addProperty("status", "INACTIVE");
-			return response;
-		} else if (cardNumber != 123456L) {
-			return null;
+	public DebitCard findCreditCard(Long cardNumber) {
+		try {
+			BaseTestUtil.open();
+			if (cardNumber == 888888L) {
+				return new DebitCard().setInteger("agency", 888)
+						.setInteger("account", 888)
+						.setLong("cardnumber", cardNumber)
+						.setString("status", "INACTIVE");
+			} else if (cardNumber != 123456L) {
+				return null;
+			}
+			return new DebitCard().setInteger("agency", 123)
+					.setInteger("account", 456)
+					.setLong("cardnumber", cardNumber)
+					.setString("status", "ACTIVE");
+		} finally {
+			Base.close();
 		}
-
-		JsonObject response = new JsonObject();
-		response.addProperty("agency", 123);
-		response.addProperty("account", 456);
-		response.addProperty("cardNumber", cardNumber);
-		response.addProperty("status", "ACTIVE");
-		return response;
 	}
 }

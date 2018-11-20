@@ -1,11 +1,11 @@
 package br.com.evandropires.debitauthorizer.dao;
 
-import com.google.gson.JsonObject;
+import br.com.evandropires.debitauthorizer.model.DebitCard;
 
 /**
  * Created by evandro on 14/11/2018.
  */
 public interface CreditCardDAO {
 
-	JsonObject findCreditCard(Long cardNumber);
+	DebitCard findCreditCard(Long cardNumber);
 }
