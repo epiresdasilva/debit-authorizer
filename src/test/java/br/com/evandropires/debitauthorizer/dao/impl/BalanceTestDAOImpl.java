@@ -34,7 +34,7 @@ public class BalanceTestDAOImpl implements BalanceDAO {
 	}
 
 	@Override
-	public void provisionalDebit(Integer agency, Integer account, BigDecimal debitValue) {
+	public void addProvisionalDebit(Integer agency, Integer account, BigDecimal debitValue) {
 		//TODO
 	}
 }

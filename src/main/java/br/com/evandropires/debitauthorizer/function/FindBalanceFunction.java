@@ -15,7 +15,6 @@ public class FindBalanceFunction {
 		Integer account = params.get("account").getAsInt();
 
 		BalanceProvider balanceProvider = new BalanceProvider();
-		balanceProvider.setBalanceDAO(new BalanceDAOImpl());
 		return new BalanceService(balanceProvider).findBalance(agency, account);
 	}
 

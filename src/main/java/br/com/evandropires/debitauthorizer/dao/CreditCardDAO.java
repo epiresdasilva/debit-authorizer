@@ -7,5 +7,5 @@ import com.google.gson.JsonObject;
  */
 public interface CreditCardDAO {
 
-	JsonObject findCreditCard(String cardNumber);
+	JsonObject findCreditCard(Long cardNumber);
 }

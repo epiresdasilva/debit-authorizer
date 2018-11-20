@@ -10,10 +10,9 @@ import com.google.gson.JsonObject;
  */
 public class FindCreditCardFunction {
 	public static JsonObject main(JsonObject params) {
-		String cardNumber = params.get("cardNumber").getAsString();
+		Long cardNumber = params.get("cardNumber").getAsLong();
 
 		CreditCardProvider creditCardProvider = new CreditCardProvider();
-		creditCardProvider.setCreditCardDAO(new CreditCardDAOImpl());
 		return new CreditCardService(creditCardProvider).findCreditCard(cardNumber);
 	}
 

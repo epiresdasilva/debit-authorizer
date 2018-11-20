@@ -9,15 +9,15 @@ import com.google.gson.JsonObject;
 public class CreditCardTestDAOImpl implements CreditCardDAO {
 
 	@Override
-	public JsonObject findCreditCard(String cardNumber) {
-		if (cardNumber.equals("888888")) {
+	public JsonObject findCreditCard(Long cardNumber) {
+		if (cardNumber == 888888L) {
 			JsonObject response = new JsonObject();
 			response.addProperty("agency", 888);
 			response.addProperty("account", 888);
 			response.addProperty("cardNumber", cardNumber);
 			response.addProperty("status", "INACTIVE");
 			return response;
-		} else if (!cardNumber.equals("123456")) {
+		} else if (cardNumber != 123456L) {
 			return null;
 		}
 

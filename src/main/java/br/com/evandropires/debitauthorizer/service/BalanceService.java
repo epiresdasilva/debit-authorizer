@@ -1,8 +1,8 @@
 package br.com.evandropires.debitauthorizer.service;
 
+import br.com.evandropires.debitauthorizer.model.Account;
+import br.com.evandropires.debitauthorizer.model.Balance;
 import com.google.gson.JsonObject;
-
-import java.math.BigDecimal;
 
 /**
  * Created by evandro on 14/11/2018.
@@ -15,11 +15,18 @@ public class BalanceService {
 		this.provider = provider;
 	}
 
-	public JsonObject findBalance(Integer agency, Integer account) {
-		return provider.getBalanceDAO().findBalance(agency, account);
-	}
-
-	public void provisionalDebit(Integer agency, Integer account, BigDecimal debitValue) {
-		provider.getBalanceDAO().provisionalDebit(agency, account, debitValue);
+	public JsonObject findBalance(Integer agency, Integer accountNumber) {
+		Account account = provider.getAccountService().findAccount(agency, accountNumber);
+		if (account == null) {
+			throw new RuntimeException("Account not exists.");
+		}
+		Balance balance = provider.getBalanceDAO().findBalance(agency, accountNumber);
+		JsonObject response = new JsonObject();
+		response.addProperty("agency", account.getAgency());
+		response.addProperty("account", account.getAccountNumber());
+		response.addProperty("name", account.getName());
+		response.addProperty("status", account.getStatus());
+		response.addProperty("balance", balance.getBalanceValue());
+		return response;
 	}
 }

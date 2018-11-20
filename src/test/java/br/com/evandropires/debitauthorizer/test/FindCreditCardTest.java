@@ -17,7 +17,7 @@ public class FindCreditCardTest {
 
 	@Test
 	public void findValidCreditCard() {
-		String cardNumber = "123456";
+		Long cardNumber = 123456L;
 
 		CreditCardProvider creditCardProvider = new CreditCardProvider();
 		creditCardProvider.setCreditCardDAO(new CreditCardTestDAOImpl());
@@ -31,7 +31,7 @@ public class FindCreditCardTest {
 
 	@Test
 	public void findInvalidCreditCard() {
-		String cardNumber = "999999";
+		Long cardNumber = 999999L;
 
 		CreditCardProvider creditCardProvider = new CreditCardProvider();
 		creditCardProvider.setCreditCardDAO(new CreditCardTestDAOImpl());
@@ -41,7 +41,7 @@ public class FindCreditCardTest {
 
 	@Test
 	public void findInactiveCreditCard() {
-		String cardNumber = "888888";
+		Long cardNumber = 888888L;
 
 		CreditCardProvider creditCardProvider = new CreditCardProvider();
 		creditCardProvider.setCreditCardDAO(new CreditCardTestDAOImpl());

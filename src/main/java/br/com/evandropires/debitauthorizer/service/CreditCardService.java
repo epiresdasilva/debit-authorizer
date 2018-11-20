@@ -13,7 +13,7 @@ public class CreditCardService {
 		this.provider = provider;
 	}
 
-	public JsonObject findCreditCard(String cardNumber) {
+	public JsonObject findCreditCard(Long cardNumber) {
 		return provider.getCreditCardDAO().findCreditCard(cardNumber);
 	}
 
