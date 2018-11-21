@@ -1,2 +1,2 @@
 sls deploy
-deploy credit-card-online-debit-dev-authorizer authorizer.json -w
+deploy debitauthorizer/authorizer authorizer.json -w
