@@ -15,7 +15,11 @@ module.exports = composer.sequence(
                 ),
                 params => { params.value = params.balance - params.debitValue >= 0 }
             ),
-            composer.action('debitauthorizer-dev-provisionalDebit'),
+            composer.sequence(
+                composer.action('debitauthorizer-dev-provisionalDebit'),
+                composer.function(({ agency, account, debitValue, id }) => ({ value: "{\"agency\": "+agency+", \"account\": "+account+", \"debitValue\": "+debitValue+", \"id\": "+id+" }" })),
+                composer.action('EventStreams/messageHubProduce')
+            ),
             params => { params.message = 'failure'}
         ),
         params => { params.message = 'failure' }

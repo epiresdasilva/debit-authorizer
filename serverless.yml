@@ -2,6 +2,8 @@ service: debitauthorizer
 provider:
   name: openwhisk
   runtime: java
+  memory: 128
+  timeout: 10
 package:
   artifact: target/debitauthorizer.jar
 functions:
@@ -10,8 +12,17 @@ functions:
   findCreditCard:
     handler: target/debitauthorizer.jar:br.com.evandropires.debitauthorizer.function.FindCreditCardFunction
   provisionalDebit:
-    handler: target/debitauthorizer.jar:br.com.evandropires.debitauthorizer.function.ProvisionalDebitFunction
+    handler: target/debitauthorizer.jar:br.com.evandropires.debitauthorizer.function.ProvisionalDebitAddFunction
+  provisionalDebitRegister:
+    handler: target/debitauthorizer.jar:br.com.evandropires.debitauthorizer.function.ProvisionalDebitRegisterFunction
   transactionAdd:
-    handler: target/debitauthorizer.jar:br.com.evandropires.debitauthorizer.function.ProvisionalDebitFunction
+    handler: target/debitauthorizer.jar:br.com.evandropires.debitauthorizer.function.TransactionAddFunction
+#    events:
+#      - messagehub:
+#          brokers: kafka03-prod02.messagehub.services.us-south.bluemix.net:9093
+#          user: vlrx3tiF17swAgLP
+#          password: NQFQPKGbhTbK9fejHTKPbhuf1AVloPDl
+#          admin_url: https://kafka-admin-prod02.messagehub.services.us-south.bluemix.net:443
+#          topic: provisionaldebit
 plugins:
   - "serverless-openwhisk"

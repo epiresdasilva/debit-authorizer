@@ -243,8 +243,29 @@
                                                                 "type": "mask",
                                                                 "components": [
                                                                     {
-                                                                        "type": "action",
-                                                                        "name": "/_/debitauthorizer-dev-provisionalDebit",
+                                                                        "type": "sequence",
+                                                                        "components": [
+                                                                            {
+                                                                                "type": "action",
+                                                                                "name": "/_/debitauthorizer-dev-provisionalDebit",
+                                                                                "path": "[1].consequent.consequent[0]"
+                                                                            },
+                                                                            {
+                                                                                "type": "function",
+                                                                                "function": {
+                                                                                    "exec": {
+                                                                                        "kind": "nodejs:default",
+                                                                                        "code": "({ agency, account, debitValue, id }) => ({ value: \"{\\\"agency\\\": \"+agency+\", \\\"account\\\": \"+account+\", \\\"debitValue\\\": \"+debitValue+\", \\\"id\\\": \"+id+\" }\" })"
+                                                                                    }
+                                                                                },
+                                                                                "path": "[1].consequent.consequent[1]"
+                                                                            },
+                                                                            {
+                                                                                "type": "action",
+                                                                                "name": "/_/EventStreams/messageHubProduce",
+                                                                                "path": "[1].consequent.consequent[2]"
+                                                                            }
+                                                                        ],
                                                                         "path": "[1].consequent.consequent"
                                                                     }
                                                                 ]
@@ -387,8 +408,26 @@
                         ]
                     },
                     "consequent": {
-                        "type": "action",
-                        "name": "/_/debitauthorizer-dev-provisionalDebit"
+                        "type": "sequence",
+                        "components": [
+                            {
+                                "type": "action",
+                                "name": "/_/debitauthorizer-dev-provisionalDebit"
+                            },
+                            {
+                                "type": "function",
+                                "function": {
+                                    "exec": {
+                                        "kind": "nodejs:default",
+                                        "code": "({ agency, account, debitValue, id }) => ({ value: \"{\\\"agency\\\": \"+agency+\", \\\"account\\\": \"+account+\", \\\"debitValue\\\": \"+debitValue+\", \\\"id\\\": \"+id+\" }\" })"
+                                    }
+                                }
+                            },
+                            {
+                                "type": "action",
+                                "name": "/_/EventStreams/messageHubProduce"
+                            }
+                        ]
                     },
                     "alternate": {
                         "type": "function",

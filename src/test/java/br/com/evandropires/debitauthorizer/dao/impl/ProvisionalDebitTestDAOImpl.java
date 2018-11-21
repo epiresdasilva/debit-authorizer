@@ -10,7 +10,11 @@ import java.math.BigDecimal;
 public class ProvisionalDebitTestDAOImpl implements ProvisionalDebitDAO {
 
 	@Override
-	public void addProvisionalDebit(Integer agency, Integer account, BigDecimal debitValue) {
+	public Long addProvisionalDebit(Integer agency, Integer account, BigDecimal debitValue) {
+		return null;
 	}
 
+	@Override
+	public void registerProvisionalDebit(Long id) {
+	}
 }

@@ -13,11 +13,15 @@ public class ProvisionalDebitService {
 		this.provider = provider;
 	}
 
-	public void addProvisionalDebit(Integer agency, Integer account, BigDecimal debitValue) {
+	public Long addProvisionalDebit(Integer agency, Integer account, BigDecimal debitValue) {
 		if (debitValue == null || BigDecimal.ZERO.compareTo(debitValue) >= 0) {
 			throw new RuntimeException("Debit value must be greater than zero.");
 		}
-		provider.getProvisionalDebitDAO().addProvisionalDebit(agency, account, debitValue);
+		return provider.getProvisionalDebitDAO().addProvisionalDebit(agency, account, debitValue);
+	}
+
+	public void registerProvisionalDebit(Long id) {
+		provider.getProvisionalDebitDAO().registerProvisionalDebit(id);
 	}
 
 }

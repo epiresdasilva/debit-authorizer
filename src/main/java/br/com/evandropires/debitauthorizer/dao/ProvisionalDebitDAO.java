@@ -7,6 +7,7 @@ import java.math.BigDecimal;
  */
 public interface ProvisionalDebitDAO {
 
-	void addProvisionalDebit(Integer agency, Integer account, BigDecimal debitValue);
+	Long addProvisionalDebit(Integer agency, Integer account, BigDecimal debitValue);
+	void registerProvisionalDebit(Long id);
 
 }

@@ -1,7 +1,7 @@
 package br.com.evandropires.debitauthorizer.dao.impl;
 
 import br.com.evandropires.debitauthorizer.dao.ProvisionalDebitDAO;
-import br.com.evandropires.debitauthorizer.model.Transaction;
+import br.com.evandropires.debitauthorizer.model.ProvisionalDebit;
 import org.javalite.activejdbc.Base;
 
 import java.math.BigDecimal;
@@ -13,18 +13,41 @@ import java.util.Date;
 public class ProvisionalDebitDAOImpl implements ProvisionalDebitDAO {
 
 	@Override
-	public void addProvisionalDebit(Integer agency, Integer account, BigDecimal debitValue) {
+	public Long addProvisionalDebit(Integer agency, Integer account, BigDecimal debitValue) {
+		Base.open();
+
+		ProvisionalDebit provisionalDebit = new ProvisionalDebit();
+		try {
+			Base.openTransaction();
+
+			provisionalDebit.set("accountnumber", account);
+			provisionalDebit.set("agency", agency);
+			provisionalDebit.set("debitvalue", debitValue);
+			provisionalDebit.setTimestamp("debitdate", new Date());
+			provisionalDebit.set("status", "PENDING");
+			provisionalDebit.insert();
+
+			Base.commitTransaction();
+		} catch (Exception e) {
+			Base.rollbackTransaction();
+			e.printStackTrace();
+		} finally {
+			Base.close();
+		}
+
+		return provisionalDebit.getLongId();
+	}
+
+	@Override
+	public void registerProvisionalDebit(Long id) {
 		Base.open();
 
 		try {
 			Base.openTransaction();
 
-			Transaction transaction = new Transaction();
-			transaction.set("accountnumber", account);
-			transaction.set("agency", agency);
-			transaction.set("transactionvalue", debitValue);
-			transaction.setTimestamp("transactiondate", new Date());
-			transaction.insert();
+			ProvisionalDebit provisionalDebit = new ProvisionalDebit().findById(id);
+			provisionalDebit.set("status", "REGISTERED");
+			provisionalDebit.save();
 
 			Base.commitTransaction();
 		} catch (Exception e) {
@@ -34,5 +57,4 @@ public class ProvisionalDebitDAOImpl implements ProvisionalDebitDAO {
 			Base.close();
 		}
 	}
-
 }
