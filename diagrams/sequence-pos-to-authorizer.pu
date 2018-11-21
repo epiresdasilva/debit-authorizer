@@ -1,0 +1,28 @@
+@startuml
+
+actor "Customer" as customer
+participant POS as pos
+participant Authorizer as auth
+participant "Co-authorizer" as coauth
+participant "Legacy System" as legacy
+
+activate customer
+  customer -> pos:
+  activate pos
+    pos -> auth:
+    activate auth
+      auth -> coauth:
+      activate coauth
+        coauth -> legacy:
+        activate legacy
+          legacy --> coauth
+        deactivate legacy
+        coauth --> auth
+      deactivate coauth
+      auth --> pos
+    deactivate auth
+    pos --> customer
+  deactivate pos
+deactivate customer
+
+@enduml
