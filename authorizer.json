@@ -70,6 +70,273 @@
                     }
                 ],
                 "path": "[0]"
+            },
+            {
+                "type": "let",
+                "declarations": {
+                    "params": null
+                },
+                "components": [
+                    {
+                        "type": "finally",
+                        "body": {
+                            "type": "function",
+                            "function": {
+                                "exec": {
+                                    "kind": "nodejs:default",
+                                    "code": "args => { params = args }"
+                                }
+                            }
+                        },
+                        "finalizer": {
+                            "type": "if_nosave",
+                            "test": {
+                                "type": "mask",
+                                "components": [
+                                    {
+                                        "type": "function",
+                                        "function": {
+                                            "exec": {
+                                                "kind": "nodejs:default",
+                                                "code": "params => { params.value = params.status === 'ACTIVE' }"
+                                            }
+                                        },
+                                        "path": "[1].test"
+                                    }
+                                ]
+                            },
+                            "consequent": {
+                                "type": "finally",
+                                "body": {
+                                    "type": "function",
+                                    "function": {
+                                        "exec": {
+                                            "kind": "nodejs:default",
+                                            "code": "() => params"
+                                        }
+                                    }
+                                },
+                                "finalizer": {
+                                    "type": "mask",
+                                    "components": [
+                                        {
+                                            "type": "let",
+                                            "declarations": {
+                                                "params": null
+                                            },
+                                            "components": [
+                                                {
+                                                    "type": "finally",
+                                                    "body": {
+                                                        "type": "function",
+                                                        "function": {
+                                                            "exec": {
+                                                                "kind": "nodejs:default",
+                                                                "code": "args => { params = args }"
+                                                            }
+                                                        }
+                                                    },
+                                                    "finalizer": {
+                                                        "type": "if_nosave",
+                                                        "test": {
+                                                            "type": "mask",
+                                                            "components": [
+                                                                {
+                                                                    "type": "sequence",
+                                                                    "components": [
+                                                                        {
+                                                                            "type": "sequence",
+                                                                            "components": [
+                                                                                {
+                                                                                    "type": "let",
+                                                                                    "declarations": {
+                                                                                        "params": null
+                                                                                    },
+                                                                                    "components": [
+                                                                                        {
+                                                                                            "type": "finally",
+                                                                                            "body": {
+                                                                                                "type": "function",
+                                                                                                "function": {
+                                                                                                    "exec": {
+                                                                                                        "kind": "nodejs:default",
+                                                                                                        "code": "args => { params = args }"
+                                                                                                    }
+                                                                                                }
+                                                                                            },
+                                                                                            "finalizer": {
+                                                                                                "type": "sequence",
+                                                                                                "components": [
+                                                                                                    {
+                                                                                                        "type": "mask",
+                                                                                                        "components": [
+                                                                                                            {
+                                                                                                                "type": "function",
+                                                                                                                "function": {
+                                                                                                                    "exec": {
+                                                                                                                        "kind": "nodejs:default",
+                                                                                                                        "code": "params => { params.debitValue}"
+                                                                                                                    }
+                                                                                                                },
+                                                                                                                "path": "[1].consequent.test[0][0]"
+                                                                                                            },
+                                                                                                            {
+                                                                                                                "type": "action",
+                                                                                                                "name": "/_/debitauthorizer/findBalance",
+                                                                                                                "path": "[1].consequent.test[0][1]"
+                                                                                                            }
+                                                                                                        ]
+                                                                                                    },
+                                                                                                    {
+                                                                                                        "type": "function",
+                                                                                                        "function": {
+                                                                                                            "exec": {
+                                                                                                                "kind": "nodejs:default",
+                                                                                                                "code": "result => ({ params, result })"
+                                                                                                            }
+                                                                                                        }
+                                                                                                    }
+                                                                                                ]
+                                                                                            }
+                                                                                        }
+                                                                                    ]
+                                                                                },
+                                                                                {
+                                                                                    "type": "function",
+                                                                                    "function": {
+                                                                                        "exec": {
+                                                                                            "kind": "nodejs:default",
+                                                                                            "code": "({ params, result }) => Object.assign(params, result)"
+                                                                                        }
+                                                                                    }
+                                                                                }
+                                                                            ],
+                                                                            "path": "[1].consequent.test[0]"
+                                                                        },
+                                                                        {
+                                                                            "type": "function",
+                                                                            "function": {
+                                                                                "exec": {
+                                                                                    "kind": "nodejs:default",
+                                                                                    "code": "params => { params.value = params.balance - params.debitValue >= 0 }"
+                                                                                }
+                                                                            },
+                                                                            "path": "[1].consequent.test[1]"
+                                                                        }
+                                                                    ],
+                                                                    "path": "[1].consequent.test"
+                                                                }
+                                                            ]
+                                                        },
+                                                        "consequent": {
+                                                            "type": "finally",
+                                                            "body": {
+                                                                "type": "function",
+                                                                "function": {
+                                                                    "exec": {
+                                                                        "kind": "nodejs:default",
+                                                                        "code": "() => params"
+                                                                    }
+                                                                }
+                                                            },
+                                                            "finalizer": {
+                                                                "type": "mask",
+                                                                "components": [
+                                                                    {
+                                                                        "type": "sequence",
+                                                                        "components": [
+                                                                            {
+                                                                                "type": "action",
+                                                                                "name": "/_/debitauthorizer/provisionalDebit",
+                                                                                "path": "[1].consequent.consequent[0]"
+                                                                            },
+                                                                            {
+                                                                                "type": "function",
+                                                                                "function": {
+                                                                                    "exec": {
+                                                                                        "kind": "nodejs:default",
+                                                                                        "code": "({ agency, account, debitValue, id }) => ({ value: \"{\\\"agency\\\": \"+agency+\", \\\"account\\\": \"+account+\", \\\"debitValue\\\": \"+debitValue+\", \\\"id\\\": \"+id+\" }\" })"
+                                                                                    }
+                                                                                },
+                                                                                "path": "[1].consequent.consequent[1]"
+                                                                            },
+                                                                            {
+                                                                                "type": "action",
+                                                                                "name": "/_/EventStreams/messageHubProduce",
+                                                                                "path": "[1].consequent.consequent[2]"
+                                                                            }
+                                                                        ],
+                                                                        "path": "[1].consequent.consequent"
+                                                                    }
+                                                                ]
+                                                            }
+                                                        },
+                                                        "alternate": {
+                                                            "type": "finally",
+                                                            "body": {
+                                                                "type": "function",
+                                                                "function": {
+                                                                    "exec": {
+                                                                        "kind": "nodejs:default",
+                                                                        "code": "() => params"
+                                                                    }
+                                                                }
+                                                            },
+                                                            "finalizer": {
+                                                                "type": "mask",
+                                                                "components": [
+                                                                    {
+                                                                        "type": "function",
+                                                                        "function": {
+                                                                            "exec": {
+                                                                                "kind": "nodejs:default",
+                                                                                "code": "params => { params.message = 'failure'}"
+                                                                            }
+                                                                        },
+                                                                        "path": "[1].consequent.alternate"
+                                                                    }
+                                                                ]
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            ],
+                                            "path": "[1].consequent"
+                                        }
+                                    ]
+                                }
+                            },
+                            "alternate": {
+                                "type": "finally",
+                                "body": {
+                                    "type": "function",
+                                    "function": {
+                                        "exec": {
+                                            "kind": "nodejs:default",
+                                            "code": "() => params"
+                                        }
+                                    }
+                                },
+                                "finalizer": {
+                                    "type": "mask",
+                                    "components": [
+                                        {
+                                            "type": "function",
+                                            "function": {
+                                                "exec": {
+                                                    "kind": "nodejs:default",
+                                                    "code": "params => { params.message = 'failure' }"
+                                                }
+                                            },
+                                            "path": "[1].alternate"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                ],
+                "path": "[1]"
             }
         ],
         "path": ""
@@ -94,6 +361,93 @@
                         "name": "/_/debitauthorizer/findCreditCard"
                     }
                 ]
+            },
+            {
+                "type": "if",
+                "test": {
+                    "type": "function",
+                    "function": {
+                        "exec": {
+                            "kind": "nodejs:default",
+                            "code": "params => { params.value = params.status === 'ACTIVE' }"
+                        }
+                    }
+                },
+                "consequent": {
+                    "type": "if",
+                    "test": {
+                        "type": "sequence",
+                        "components": [
+                            {
+                                "type": "merge",
+                                "components": [
+                                    {
+                                        "type": "function",
+                                        "function": {
+                                            "exec": {
+                                                "kind": "nodejs:default",
+                                                "code": "params => { params.debitValue}"
+                                            }
+                                        }
+                                    },
+                                    {
+                                        "type": "action",
+                                        "name": "/_/debitauthorizer/findBalance"
+                                    }
+                                ]
+                            },
+                            {
+                                "type": "function",
+                                "function": {
+                                    "exec": {
+                                        "kind": "nodejs:default",
+                                        "code": "params => { params.value = params.balance - params.debitValue >= 0 }"
+                                    }
+                                }
+                            }
+                        ]
+                    },
+                    "consequent": {
+                        "type": "sequence",
+                        "components": [
+                            {
+                                "type": "action",
+                                "name": "/_/debitauthorizer/provisionalDebit"
+                            },
+                            {
+                                "type": "function",
+                                "function": {
+                                    "exec": {
+                                        "kind": "nodejs:default",
+                                        "code": "({ agency, account, debitValue, id }) => ({ value: \"{\\\"agency\\\": \"+agency+\", \\\"account\\\": \"+account+\", \\\"debitValue\\\": \"+debitValue+\", \\\"id\\\": \"+id+\" }\" })"
+                                    }
+                                }
+                            },
+                            {
+                                "type": "action",
+                                "name": "/_/EventStreams/messageHubProduce"
+                            }
+                        ]
+                    },
+                    "alternate": {
+                        "type": "function",
+                        "function": {
+                            "exec": {
+                                "kind": "nodejs:default",
+                                "code": "params => { params.message = 'failure'}"
+                            }
+                        }
+                    }
+                },
+                "alternate": {
+                    "type": "function",
+                    "function": {
+                        "exec": {
+                            "kind": "nodejs:default",
+                            "code": "params => { params.message = 'failure' }"
+                        }
+                    }
+                }
             }
         ]
     },
