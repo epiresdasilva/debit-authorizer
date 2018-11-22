@@ -4,7 +4,8 @@ module.exports = composer.sequence(
     composer.merge(
         params => { params.debitValue },
         composer.action('debitauthorizer/findCreditCard')
-    ),
+    )
+    ,
     composer.if(
         params => { params.value = params.status === 'ACTIVE' },
         composer.if(

@@ -1,13 +1,13 @@
 package br.com.evandropires.debitauthorizer.dao;
 
-import br.com.evandropires.debitauthorizer.model.Account;
-import com.google.gson.JsonObject;
+
+import br.com.evandropires.debitauthorizer.jooq.tables.records.AccountRecord;
 
 /**
  * Created by evandro on 14/11/2018.
  */
 public interface AccountDAO {
 
-	Account findAccount(Integer agency, Integer account);
+	AccountRecord findAccount(Integer agency, Integer account);
 
 }
