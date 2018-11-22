@@ -10,3 +10,6 @@ jspm_packages
 
 target
 *.iml
+
+.DS_Store
+jmeter.log
