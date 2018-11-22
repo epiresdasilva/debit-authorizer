@@ -45,7 +45,7 @@ public class FindBalanceTest {
 		AccountProvider accountProvider = new AccountProvider();
 		accountProvider.setAccountDAO(new AccountTestDAOImpl());
 		balanceProvider.setAccountService(new AccountService(accountProvider));
-		JsonObject response = new BalanceService(balanceProvider).findBalance(agency, account);
+		new BalanceService(balanceProvider).findBalance(agency, account);
 	}
 
 	@Test

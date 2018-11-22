@@ -243,7 +243,7 @@
                                                                 "type": "mask",
                                                                 "components": [
                                                                     {
-                                                                        "type": "sequence",
+                                                                        "type": "async",
                                                                         "components": [
                                                                             {
                                                                                 "type": "action",
@@ -408,7 +408,7 @@
                         ]
                     },
                     "consequent": {
-                        "type": "sequence",
+                        "type": "async",
                         "components": [
                             {
                                 "type": "action",

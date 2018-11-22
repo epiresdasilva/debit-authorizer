@@ -4,8 +4,7 @@ module.exports = composer.sequence(
     composer.merge(
         params => { params.debitValue },
         composer.action('debitauthorizer/findCreditCard')
-    )
-    ,
+    ),
     composer.if(
         params => { params.value = params.status === 'ACTIVE' },
         composer.if(
@@ -16,7 +15,7 @@ module.exports = composer.sequence(
                 ),
                 params => { params.value = params.balance - params.debitValue >= 0 }
             ),
-            composer.sequence(
+            composer.async(
                 composer.action('debitauthorizer/provisionalDebit'),
                 composer.function(({ agency, account, debitValue, id }) => ({ value: "{\"agency\": "+agency+", \"account\": "+account+", \"debitValue\": "+debitValue+", \"id\": "+id+" }" })),
                 composer.action('EventStreams/messageHubProduce')
