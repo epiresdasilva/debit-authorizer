@@ -54,3 +54,16 @@ Use the `serverless` command to deploy your service. The sample `handler.js` fil
 mvn clean deploy
 deploy credit-card-online-debit-dev-authorizer authorizer.json -w
 ```
+
+## SQL
+
+```sql
+create table account (agency integer, accountnumber integer, status varchar, name varchar, PRIMARY KEY(agency, accountnumber));
+create table balance (agency integer, accountnumber integer, balancevalue numeric(15,2), PRIMARY KEY(agency, accountnumber));
+create table debitcard (agency integer, accountnumber integer, cardnumber integer PRIMARY KEY, status varchar);
+create table provisionaldebit (id serial PRIMARY KEY, agency integer, accountnumber integer, debitvalue numeric(15,2), debitdate timestamp, status varchar);
+create table transaction (id serial PRIMARY KEY, agency integer, accountnumber integer, transactionvalue numeric(15,2), transactiondate timestamp);
+insert into account (agency, accountnumber, status, name) values (111, 123, 'ACTIVE', 'Bjorn'),(111, 456, 'ACTIVE', 'Bucky'),(222, 123, 'INACTIVE', 'Little Fox');
+insert into balance (agency, accountnumber, balancevalue) values (111,123,1000),(111,456,2000),(222,123,3000);
+insert into debitcard (agency, accountnumber, cardnumber, status) values (111,123,123456,'ACTIVE'),(111,456,456789,'INACTIVE');
+```
