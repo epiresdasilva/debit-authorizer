@@ -13,4 +13,10 @@ public class FindCreditCardFunction {
 		CreditCardProvider creditCardProvider = new CreditCardProvider();
 		return new CreditCardService(creditCardProvider).findCreditCard(cardNumber);
 	}
+
+	public static void main(String[] args) {
+		JsonObject payload = new JsonObject();
+		payload.addProperty("cardNumber", 123456);
+		System.out.print(new FindCreditCardFunction().main(payload));
+	}
 }

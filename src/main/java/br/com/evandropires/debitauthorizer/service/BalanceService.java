@@ -1,7 +1,7 @@
 package br.com.evandropires.debitauthorizer.service;
 
-import br.com.evandropires.debitauthorizer.jooq.tables.records.AccountRecord;
-import br.com.evandropires.debitauthorizer.jooq.tables.records.BalanceRecord;
+import br.com.evandropires.debitauthorizer.entity.AccountEntity;
+import br.com.evandropires.debitauthorizer.entity.BalanceEntity;
 import com.google.gson.JsonObject;
 
 /**
@@ -16,17 +16,17 @@ public class BalanceService {
 	}
 
 	public JsonObject findBalance(Integer agency, Integer accountNumber) {
-		AccountRecord account = provider.getAccountService().findAccount(agency, accountNumber);
+		AccountEntity account = provider.getAccountService().findAccount(agency, accountNumber);
 		if (account == null) {
 			throw new RuntimeException("Account not exists.");
 		}
-		BalanceRecord balance = provider.getBalanceDAO().findBalance(agency, accountNumber);
+		BalanceEntity balance = provider.getBalanceDAO().findBalance(agency, accountNumber);
 		JsonObject response = new JsonObject();
 		response.addProperty("agency", account.getAgency());
-		response.addProperty("account", account.getAccountnumber());
+		response.addProperty("account", account.getAccountNumber());
 		response.addProperty("name", account.getName());
-		response.addProperty("status", account.getStatus());
-		response.addProperty("balance", balance.getBalancevalue());
+		response.addProperty("status", account.getStatus().name());
+		response.addProperty("balance", balance.getValue());
 		return response;
 	}
 }

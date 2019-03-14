@@ -2,13 +2,12 @@ package br.com.evandropires.debitauthorizer.dao.impl;
 
 import br.com.evandropires.debitauthorizer.dao.ProvisionalDebitDAO;
 import br.com.evandropires.debitauthorizer.dao.util.ConnectionUtil;
-import br.com.evandropires.debitauthorizer.jooq.tables.Provisionaldebit;
-import org.jooq.DSLContext;
-import org.jooq.SQLDialect;
-import org.jooq.impl.DSL;
+import br.com.evandropires.debitauthorizer.entity.ProvisionalDebitEntity;
+import com.jcabi.jdbc.JdbcSession;
+import com.jcabi.jdbc.SingleOutcome;
 
+import javax.sql.DataSource;
 import java.math.BigDecimal;
-import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.Date;
 
@@ -19,17 +18,16 @@ public class ProvisionalDebitDAOImpl implements ProvisionalDebitDAO {
 
 	@Override
 	public Long addProvisionalDebit(Integer agency, Integer account, BigDecimal debitValue) {
-		try (Connection conn = ConnectionUtil.newConnection()) {
-			DSLContext create = DSL.using(conn, SQLDialect.POSTGRES);
-			return create.insertInto(Provisionaldebit.PROVISIONALDEBIT)
-					.set(Provisionaldebit.PROVISIONALDEBIT.ACCOUNTNUMBER, account)
-					.set(Provisionaldebit.PROVISIONALDEBIT.AGENCY, agency)
-					.set(Provisionaldebit.PROVISIONALDEBIT.DEBITVALUE, debitValue)
-					.set(Provisionaldebit.PROVISIONALDEBIT.DEBITDATE, new java.sql.Date(new Date().getTime()))
-					.set(Provisionaldebit.PROVISIONALDEBIT.STATUS, "PENDING")
-					.returning(Provisionaldebit.PROVISIONALDEBIT.ID)
-					.fetchOne()
-					.getValue(Provisionaldebit.PROVISIONALDEBIT.ID, Long.class);
+		DataSource dataSource = ConnectionUtil.getDataSource();
+		try {
+			return new JdbcSession(dataSource)
+                    .sql("INSERT INTO provisionaldebit (agency, accountnumber, debitvalue, debitdate, status) VALUES (?, ?, ?, ?, ?)")
+                    .set(agency)
+                    .set(account)
+					.set(debitValue)
+					.set(new Date())
+					.set(ProvisionalDebitEntity.ProvisionalDebitStatus.PENDING.name())
+                    .update(new SingleOutcome<>(Long.class));
 		} catch (SQLException e) {
 			e.printStackTrace();
 			throw new RuntimeException(e);
@@ -38,12 +36,13 @@ public class ProvisionalDebitDAOImpl implements ProvisionalDebitDAO {
 
 	@Override
 	public void registerProvisionalDebit(Long id) {
-		try (Connection conn = ConnectionUtil.newConnection()) {
-			DSLContext create = DSL.using(conn, SQLDialect.POSTGRES);
-			create.update(Provisionaldebit.PROVISIONALDEBIT)
-					.set(Provisionaldebit.PROVISIONALDEBIT.STATUS, "REGISTERED")
-					.where(Provisionaldebit.PROVISIONALDEBIT.ID.eq(id.intValue()))
-					.execute();
+		DataSource dataSource = ConnectionUtil.getDataSource();
+		try {
+			 new JdbcSession(dataSource)
+					.sql("UPDATE provisionaldebit SET status = ? WHERE id = ?")
+					.set(ProvisionalDebitEntity.ProvisionalDebitStatus.REGISTERED.name())
+					.set(id)
+					.update(new SingleOutcome<>(Long.class));
 		} catch (SQLException e) {
 			e.printStackTrace();
 			throw new RuntimeException(e);

@@ -14,4 +14,11 @@ public class FindBalanceFunction {
 		BalanceProvider balanceProvider = new BalanceProvider();
 		return new BalanceService(balanceProvider).findBalance(agency, account);
 	}
+
+	public static void main(String[] args) {
+		JsonObject payload = new JsonObject();
+		payload.addProperty("agency", 111);
+		payload.addProperty("account", 123);
+		System.out.print(new FindBalanceFunction().main(payload));
+	}
 }

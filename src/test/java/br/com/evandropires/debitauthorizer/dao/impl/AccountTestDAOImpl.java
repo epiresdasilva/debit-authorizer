@@ -1,7 +1,7 @@
 package br.com.evandropires.debitauthorizer.dao.impl;
 
 import br.com.evandropires.debitauthorizer.dao.AccountDAO;
-import br.com.evandropires.debitauthorizer.jooq.tables.records.AccountRecord;
+import br.com.evandropires.debitauthorizer.entity.AccountEntity;
 
 /**
  * Created by evandro on 14/11/2018.
@@ -9,23 +9,23 @@ import br.com.evandropires.debitauthorizer.jooq.tables.records.AccountRecord;
 public class AccountTestDAOImpl implements AccountDAO {
 
 	@Override
-	public AccountRecord findAccount(Integer agency, Integer accountNumber) {
+	public AccountEntity findAccount(Integer agency, Integer accountNumber) {
 		if (agency == 999 && accountNumber == 999) {
 			return null;
 		} else if (agency == 888 && accountNumber == 888) {
-			AccountRecord accountRecord = new AccountRecord();
+			AccountEntity accountRecord = new AccountEntity();
 			accountRecord.setAgency(agency);
-			accountRecord.setAccountnumber(accountNumber);
+			accountRecord.setAccountNumber(accountNumber);
 			accountRecord.setName("Tim McGraw");
-			accountRecord.setStatus("INACTIVE");
+			accountRecord.setStatus(AccountEntity.AccountStatus.INACTIVE);
 			return accountRecord;
 		}
 
-		AccountRecord accountRecord = new AccountRecord();
+		AccountEntity accountRecord = new AccountEntity();
 		accountRecord.setAgency(agency);
-		accountRecord.setAccountnumber(accountNumber);
+		accountRecord.setAccountNumber(accountNumber);
 		accountRecord.setName("Keith Urban");
-		accountRecord.setStatus("ACTIVE");
+		accountRecord.setStatus(AccountEntity.AccountStatus.ACTIVE);
 		return accountRecord;
 	}
 

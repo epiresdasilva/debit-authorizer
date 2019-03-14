@@ -1,7 +1,7 @@
 package br.com.evandropires.debitauthorizer.dao.impl;
 
 import br.com.evandropires.debitauthorizer.dao.BalanceDAO;
-import br.com.evandropires.debitauthorizer.jooq.tables.records.BalanceRecord;
+import br.com.evandropires.debitauthorizer.entity.BalanceEntity;
 
 import java.math.BigDecimal;
 
@@ -11,21 +11,21 @@ import java.math.BigDecimal;
 public class BalanceTestDAOImpl implements BalanceDAO {
 
 	@Override
-	public BalanceRecord findBalance(Integer agency, Integer account) {
+	public BalanceEntity findBalance(Integer agency, Integer account) {
 		if (agency == 999 && account == 999) {
 			return null;
 		} else if (agency == 888 && account == 888) {
-			BalanceRecord balanceRecord = new BalanceRecord();
+			BalanceEntity balanceRecord = new BalanceEntity();
 			balanceRecord.setAgency(agency);
-			balanceRecord.setAccountnumber(account);
-			balanceRecord.setBalancevalue(BigDecimal.ZERO);
+			balanceRecord.setAccountNumber(account);
+			balanceRecord.setValue(BigDecimal.ZERO);
 			return balanceRecord;
 		}
 
-		BalanceRecord balanceRecord = new BalanceRecord();
+		BalanceEntity balanceRecord = new BalanceEntity();
 		balanceRecord.setAgency(agency);
-		balanceRecord.setAccountnumber(account);
-		balanceRecord.setBalancevalue(new BigDecimal(100));
+		balanceRecord.setAccountNumber(account);
+		balanceRecord.setValue(new BigDecimal(100));
 		return balanceRecord;
 	}
 }

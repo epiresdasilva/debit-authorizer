@@ -1,6 +1,6 @@
 package br.com.evandropires.debitauthorizer.service;
 
-import br.com.evandropires.debitauthorizer.jooq.tables.records.AccountRecord;
+import br.com.evandropires.debitauthorizer.entity.AccountEntity;
 
 /**
  * Created by evandro on 14/11/2018.
@@ -13,7 +13,7 @@ public class AccountService {
 		this.provider = provider;
 	}
 
-	public AccountRecord findAccount(Integer agency, Integer account) {
+	public AccountEntity findAccount(Integer agency, Integer account) {
 		return provider.getAccountDAO().findAccount(agency, account);
 	}
 
