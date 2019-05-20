@@ -9,7 +9,7 @@ import com.jcabi.jdbc.SingleOutcome;
 import javax.sql.DataSource;
 import java.math.BigDecimal;
 import java.sql.SQLException;
-import java.util.Date;
+import java.sql.Date;
 
 /**
  * Created by evandro on 14/11/2018.
@@ -24,8 +24,8 @@ public class ProvisionalDebitDAOImpl implements ProvisionalDebitDAO {
                     .sql("INSERT INTO provisionaldebit (agency, accountnumber, debitvalue, debitdate, status) VALUES (?, ?, ?, ?, ?)")
                     .set(agency)
                     .set(account)
-					.set(debitValue)
-					.set(new Date())
+					.set(debitValue.setScale(2, BigDecimal.ROUND_HALF_UP))
+					.set(new Date(new java.util.Date().getTime()))
 					.set(ProvisionalDebitEntity.ProvisionalDebitStatus.PENDING.name())
                     .update(new SingleOutcome<>(Long.class));
 		} catch (SQLException e) {

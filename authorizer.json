@@ -243,7 +243,7 @@
                                                                 "type": "mask",
                                                                 "components": [
                                                                     {
-                                                                        "type": "async",
+                                                                        "type": "sequence",
                                                                         "components": [
                                                                             {
                                                                                 "type": "action",
@@ -251,18 +251,29 @@
                                                                                 "path": "[1].consequent.consequent[0]"
                                                                             },
                                                                             {
+                                                                                "type": "async",
+                                                                                "components": [
+                                                                                    {
+                                                                                        "type": "action",
+                                                                                        "name": "/_/debitauthorizer/transactionAdd",
+                                                                                        "path": "[1].consequent.consequent[1][0]"
+                                                                                    },
+                                                                                    {
+                                                                                        "type": "action",
+                                                                                        "name": "/_/debitauthorizer/provisionalDebitRegister",
+                                                                                        "path": "[1].consequent.consequent[1][1]"
+                                                                                    }
+                                                                                ],
+                                                                                "path": "[1].consequent.consequent[1]"
+                                                                            },
+                                                                            {
                                                                                 "type": "function",
                                                                                 "function": {
                                                                                     "exec": {
                                                                                         "kind": "nodejs:default",
-                                                                                        "code": "({ agency, account, debitValue, id }) => ({ value: \"{\\\"agency\\\": \"+agency+\", \\\"account\\\": \"+account+\", \\\"debitValue\\\": \"+debitValue+\", \\\"id\\\": \"+id+\" }\" })"
+                                                                                        "code": "params => { params.message = 'AUTHORIZED'}"
                                                                                     }
                                                                                 },
-                                                                                "path": "[1].consequent.consequent[1]"
-                                                                            },
-                                                                            {
-                                                                                "type": "action",
-                                                                                "name": "/_/EventStreams/messageHubProduce",
                                                                                 "path": "[1].consequent.consequent[2]"
                                                                             }
                                                                         ],
@@ -290,7 +301,7 @@
                                                                         "function": {
                                                                             "exec": {
                                                                                 "kind": "nodejs:default",
-                                                                                "code": "params => { params.message = 'failure'}"
+                                                                                "code": "params => { params.message = 'NON AUTHORIZED'}"
                                                                             }
                                                                         },
                                                                         "path": "[1].consequent.alternate"
@@ -325,7 +336,7 @@
                                             "function": {
                                                 "exec": {
                                                     "kind": "nodejs:default",
-                                                    "code": "params => { params.message = 'failure' }"
+                                                    "code": "params => { params.message = 'NON AUTHORIZED' }"
                                                 }
                                             },
                                             "path": "[1].alternate"
@@ -408,24 +419,33 @@
                         ]
                     },
                     "consequent": {
-                        "type": "async",
+                        "type": "sequence",
                         "components": [
                             {
                                 "type": "action",
                                 "name": "/_/debitauthorizer/provisionalDebit"
                             },
                             {
+                                "type": "async",
+                                "components": [
+                                    {
+                                        "type": "action",
+                                        "name": "/_/debitauthorizer/transactionAdd"
+                                    },
+                                    {
+                                        "type": "action",
+                                        "name": "/_/debitauthorizer/provisionalDebitRegister"
+                                    }
+                                ]
+                            },
+                            {
                                 "type": "function",
                                 "function": {
                                     "exec": {
                                         "kind": "nodejs:default",
-                                        "code": "({ agency, account, debitValue, id }) => ({ value: \"{\\\"agency\\\": \"+agency+\", \\\"account\\\": \"+account+\", \\\"debitValue\\\": \"+debitValue+\", \\\"id\\\": \"+id+\" }\" })"
+                                        "code": "params => { params.message = 'AUTHORIZED'}"
                                     }
                                 }
-                            },
-                            {
-                                "type": "action",
-                                "name": "/_/EventStreams/messageHubProduce"
                             }
                         ]
                     },
@@ -434,7 +454,7 @@
                         "function": {
                             "exec": {
                                 "kind": "nodejs:default",
-                                "code": "params => { params.message = 'failure'}"
+                                "code": "params => { params.message = 'NON AUTHORIZED'}"
                             }
                         }
                     }
@@ -444,7 +464,7 @@
                     "function": {
                         "exec": {
                             "kind": "nodejs:default",
-                            "code": "params => { params.message = 'failure' }"
+                            "code": "params => { params.message = 'NON AUTHORIZED' }"
                         }
                     }
                 }

@@ -15,14 +15,16 @@ module.exports = composer.sequence(
                 ),
                 params => { params.value = params.balance - params.debitValue >= 0 }
             ),
-            composer.async(
+            composer.sequence(
                 composer.action('debitauthorizer/provisionalDebit'),
-                composer.function(({ agency, account, debitValue, id }) => ({ value: "{\"agency\": "+agency+", \"account\": "+account+", \"debitValue\": "+debitValue+", \"id\": "+id+" }" })),
-                composer.action('EventStreams/messageHubProduce')
+                composer.async(
+                    'debitauthorizer/transactionAdd',
+                    'debitauthorizer/provisionalDebitRegister'),
+                params => { params.message = 'AUTHORIZED'}
             ),
-            params => { params.message = 'failure'}
+            params => { params.message = 'NON AUTHORIZED'}
         ),
-        params => { params.message = 'failure' }
+        params => { params.message = 'NON AUTHORIZED' }
     )
 )
 
