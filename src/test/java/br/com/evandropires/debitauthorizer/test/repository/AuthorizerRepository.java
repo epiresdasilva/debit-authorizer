@@ -1,7 +1,9 @@
 package br.com.evandropires.debitauthorizer.test.repository;
 
 import br.com.evandropires.debitauthorizer.test.dto.Authorizer;
+import br.com.evandropires.debitauthorizer.test.dto.Balance;
 import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 
 import javax.ws.rs.client.*;
 import javax.ws.rs.core.MediaType;
@@ -24,7 +26,12 @@ public class AuthorizerRepository {
         payload.addProperty("cardNumber", cardNumber);
         payload.addProperty("debitValue", debitValue);
         Response response = builder.post(Entity.entity(payload.toString(), MediaType.APPLICATION_JSON_TYPE));
-        return response.readEntity(Authorizer.class);
+        String json = response.readEntity(String.class);
+        JsonParser parser = new JsonParser();
+        JsonObject authorizerJson = parser.parse(json).getAsJsonObject();
+        Authorizer authorizer = new Authorizer();
+        authorizer.setMessage(authorizerJson.get("message").getAsString());
+        return authorizer;
     }
 
 }
