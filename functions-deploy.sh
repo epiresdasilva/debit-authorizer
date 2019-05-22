@@ -1,3 +1,3 @@
 sls deploy
-deploy debitauthorizer/authorizer authorizer.json -w
-deploy debitauthorizer/findBalanceUnified findBalanceUnified.json -w
+deploy debitauthorizer/authorizer composer_functions/authorizer.json -w
+deploy debitauthorizer/findBalanceUnified composer_functions/findBalanceUnified.json -w
