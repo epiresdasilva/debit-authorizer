@@ -1,0 +1,99 @@
+{
+    "composition": {
+        "type": "sequence",
+        "components": [
+            {
+                "type": "let",
+                "declarations": {
+                    "params": null
+                },
+                "components": [
+                    {
+                        "type": "finally",
+                        "body": {
+                            "type": "function",
+                            "function": {
+                                "exec": {
+                                    "kind": "nodejs:default",
+                                    "code": "args => { params = args }"
+                                }
+                            }
+                        },
+                        "finalizer": {
+                            "type": "sequence",
+                            "components": [
+                                {
+                                    "type": "mask",
+                                    "components": [
+                                        {
+                                            "type": "action",
+                                            "name": "/_/debitauthorizer/findBalance",
+                                            "path": "[0]"
+                                        },
+                                        {
+                                            "type": "action",
+                                            "name": "/_/debitauthorizer/provisionalDebitSumPending",
+                                            "path": "[1]"
+                                        },
+                                        {
+                                            "type": "function",
+                                            "function": {
+                                                "exec": {
+                                                    "kind": "nodejs:default",
+                                                    "code": "params => { params.balance = params.balance - params.sum }"
+                                                }
+                                            },
+                                            "path": "[2]"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "type": "function",
+                                    "function": {
+                                        "exec": {
+                                            "kind": "nodejs:default",
+                                            "code": "result => ({ params, result })"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                ]
+            },
+            {
+                "type": "function",
+                "function": {
+                    "exec": {
+                        "kind": "nodejs:default",
+                        "code": "({ params, result }) => Object.assign(params, result)"
+                    }
+                }
+            }
+        ],
+        "path": ""
+    },
+    "ast": {
+        "type": "merge",
+        "components": [
+            {
+                "type": "action",
+                "name": "/_/debitauthorizer/findBalance"
+            },
+            {
+                "type": "action",
+                "name": "/_/debitauthorizer/provisionalDebitSumPending"
+            },
+            {
+                "type": "function",
+                "function": {
+                    "exec": {
+                        "kind": "nodejs:default",
+                        "code": "params => { params.balance = params.balance - params.sum }"
+                    }
+                }
+            }
+        ]
+    },
+    "version": "0.8.1"
+}

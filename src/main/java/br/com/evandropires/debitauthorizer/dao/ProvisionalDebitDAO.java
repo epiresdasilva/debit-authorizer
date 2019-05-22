@@ -9,5 +9,6 @@ public interface ProvisionalDebitDAO {
 
 	Long addProvisionalDebit(Integer agency, Integer account, BigDecimal debitValue);
 	void registerProvisionalDebit(Long id);
+	BigDecimal sumPendingDebits(Integer agency, Integer account);
 
 }

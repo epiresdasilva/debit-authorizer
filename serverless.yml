@@ -10,6 +10,9 @@ functions:
   findBalance:
     handler: target/debitauthorizer.jar:br.com.evandropires.debitauthorizer.function.FindBalanceFunction
     name: debitauthorizer/findBalance
+  balanceOperation:
+    handler: target/debitauthorizer.jar:br.com.evandropires.debitauthorizer.function.BalanceOperationFunction
+    name: debitauthorizer/balanceOperation
   findCreditCard:
     handler: target/debitauthorizer.jar:br.com.evandropires.debitauthorizer.function.FindCreditCardFunction
     name: debitauthorizer/findCreditCard
@@ -19,6 +22,9 @@ functions:
   provisionalDebitRegister:
     handler: target/debitauthorizer.jar:br.com.evandropires.debitauthorizer.function.ProvisionalDebitRegisterFunction
     name: debitauthorizer/provisionalDebitRegister
+  provisionalDebitSumPending:
+    handler: target/debitauthorizer.jar:br.com.evandropires.debitauthorizer.function.ProvisionalDebitSumPendingFunction
+    name: debitauthorizer/provisionalDebitSumPending
   transactionAdd:
     handler: target/debitauthorizer.jar:br.com.evandropires.debitauthorizer.function.TransactionAddFunction
     name: debitauthorizer/transactionAdd

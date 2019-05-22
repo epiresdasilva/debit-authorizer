@@ -262,6 +262,21 @@
                                                                                         "type": "action",
                                                                                         "name": "/_/debitauthorizer/provisionalDebitRegister",
                                                                                         "path": "[1].consequent.consequent[1][1]"
+                                                                                    },
+                                                                                    {
+                                                                                        "type": "function",
+                                                                                        "function": {
+                                                                                            "exec": {
+                                                                                                "kind": "nodejs:default",
+                                                                                                "code": "params => { params.operationValue = params.debitValue*-1 }"
+                                                                                            }
+                                                                                        },
+                                                                                        "path": "[1].consequent.consequent[1][2]"
+                                                                                    },
+                                                                                    {
+                                                                                        "type": "action",
+                                                                                        "name": "/_/debitauthorizer/balanceOperation",
+                                                                                        "path": "[1].consequent.consequent[1][3]"
                                                                                     }
                                                                                 ],
                                                                                 "path": "[1].consequent.consequent[1]"
@@ -435,6 +450,19 @@
                                     {
                                         "type": "action",
                                         "name": "/_/debitauthorizer/provisionalDebitRegister"
+                                    },
+                                    {
+                                        "type": "function",
+                                        "function": {
+                                            "exec": {
+                                                "kind": "nodejs:default",
+                                                "code": "params => { params.operationValue = params.debitValue*-1 }"
+                                            }
+                                        }
+                                    },
+                                    {
+                                        "type": "action",
+                                        "name": "/_/debitauthorizer/balanceOperation"
                                     }
                                 ]
                             },

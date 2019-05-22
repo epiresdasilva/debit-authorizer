@@ -4,6 +4,8 @@ import br.com.evandropires.debitauthorizer.entity.AccountEntity;
 import br.com.evandropires.debitauthorizer.entity.BalanceEntity;
 import com.google.gson.JsonObject;
 
+import java.math.BigDecimal;
+
 /**
  * Created by evandro on 14/11/2018.
  */
@@ -29,4 +31,9 @@ public class BalanceService {
 		response.addProperty("balance", balance.getValue());
 		return response;
 	}
+
+	public void updateBalance(Integer agency, Integer accountNumber, BigDecimal operationValue) {
+		provider.getBalanceDAO().updateBalance(agency, accountNumber, operationValue);
+	}
+
 }

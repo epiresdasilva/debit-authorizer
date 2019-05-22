@@ -28,4 +28,7 @@ public class BalanceTestDAOImpl implements BalanceDAO {
 		balanceRecord.setValue(new BigDecimal(100));
 		return balanceRecord;
 	}
+
+	public void updateBalance(Integer agency, Integer accountNumber, BigDecimal operationValue) {
+	}
 }

@@ -8,8 +8,8 @@ import com.jcabi.jdbc.SingleOutcome;
 
 import javax.sql.DataSource;
 import java.math.BigDecimal;
-import java.sql.SQLException;
 import java.sql.Date;
+import java.sql.SQLException;
 
 /**
  * Created by evandro on 14/11/2018.
@@ -43,6 +43,22 @@ public class ProvisionalDebitDAOImpl implements ProvisionalDebitDAO {
 					.set(ProvisionalDebitEntity.ProvisionalDebitStatus.REGISTERED.name())
 					.set(id)
 					.update(new SingleOutcome<>(Long.class));
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw new RuntimeException(e);
+		}
+	}
+
+	@Override
+	public BigDecimal sumPendingDebits(Integer agency, Integer accountNumber) {
+		DataSource dataSource = ConnectionUtil.getDataSource();
+		try {
+			String sum = new JdbcSession(dataSource)
+					.sql("SELECT sum(debitvalue) FROM provisionaldebit WHERE agency = ? and accountnumber = ? and status = 'PENDING'")
+					.set(agency)
+					.set(accountNumber)
+					.select(new SingleOutcome<>(String.class));
+            return sum != null ? new BigDecimal(sum) : BigDecimal.ZERO;
 		} catch (SQLException e) {
 			e.printStackTrace();
 			throw new RuntimeException(e);

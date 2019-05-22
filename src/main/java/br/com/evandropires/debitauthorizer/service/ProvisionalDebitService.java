@@ -24,4 +24,7 @@ public class ProvisionalDebitService {
 		provider.getProvisionalDebitDAO().registerProvisionalDebit(id);
 	}
 
+	public BigDecimal sumPendingDebits(Integer agency, Integer accountNumber) {
+		return provider.getProvisionalDebitDAO().sumPendingDebits(agency, accountNumber);
+	}
 }

@@ -3,9 +3,12 @@ package br.com.evandropires.debitauthorizer.dao.impl;
 import br.com.evandropires.debitauthorizer.dao.BalanceDAO;
 import br.com.evandropires.debitauthorizer.dao.util.ConnectionUtil;
 import br.com.evandropires.debitauthorizer.entity.BalanceEntity;
+import br.com.evandropires.debitauthorizer.entity.ProvisionalDebitEntity;
 import com.jcabi.jdbc.JdbcSession;
+import com.jcabi.jdbc.SingleOutcome;
 
 import javax.sql.DataSource;
+import java.math.BigDecimal;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -38,5 +41,22 @@ public class BalanceDAOImpl implements BalanceDAO {
 			throw new RuntimeException(e);
 		}
 	}
+
+	@Override
+	public void updateBalance(Integer agency, Integer accountNumber, BigDecimal operationValue) {
+		DataSource dataSource = ConnectionUtil.getDataSource();
+		try {
+			new JdbcSession(dataSource)
+					.sql("UPDATE balance SET balancevalue = balancevalue + ? WHERE agency = ? and accountnumber = ?")
+					.set(operationValue)
+					.set(agency)
+					.set(accountNumber)
+					.update(new SingleOutcome<>(Long.class));
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw new RuntimeException(e);
+		}
+	}
+
 
 }

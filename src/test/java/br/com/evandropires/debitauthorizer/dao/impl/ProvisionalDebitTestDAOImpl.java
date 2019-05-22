@@ -17,4 +17,9 @@ public class ProvisionalDebitTestDAOImpl implements ProvisionalDebitDAO {
 	@Override
 	public void registerProvisionalDebit(Long id) {
 	}
+
+	@Override
+	public BigDecimal sumPendingDebits(Integer agency, Integer account) {
+		return BigDecimal.ZERO;
+	}
 }

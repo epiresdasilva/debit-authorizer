@@ -19,7 +19,10 @@ module.exports = composer.sequence(
                 composer.action('debitauthorizer/provisionalDebit'),
                 composer.async(
                     'debitauthorizer/transactionAdd',
-                    'debitauthorizer/provisionalDebitRegister'),
+                    'debitauthorizer/provisionalDebitRegister',
+                    params => { params.operationValue = params.debitValue*-1 },
+                    'debitauthorizer/balanceOperation'
+                ),
                 params => { params.message = 'AUTHORIZED'}
             ),
             params => { params.message = 'NON AUTHORIZED'}

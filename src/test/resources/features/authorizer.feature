@@ -5,8 +5,7 @@
     Como um usuário do sistema
     Quero gerenciar de forma online os débitos feitos no comércio utilizando o cartão de débito
   Cenário: Débito online com sucesso
-    Dado que tenho cartão de débito ativo
-    E tenho conta corrente ativa com saldo "200,00"
-    Quando executo um lançamento de “50,00”
-    Então obtenho o retorno “Autorizado”
+    Dado que tenho cartao de debito ativo com conta corrente ativa com saldo "200,00"
+    Quando executo um lancamento de “50,00”
+    Então obtenho o retorno “AUTHORIZED”
     E verifico o saldo atualizado “150,00”
